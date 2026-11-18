@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Making Agreements — Unit 2.4 · Business Partner A2</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#003D46; --teal-dark:#002F38; --orange:#FF873D;
+  --white:#FFFFFF; --gray:#F2F2F2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#333;font-family:'Montserrat',sans-serif;display:flex;flex-direction:column;align-items:center;gap:40px;padding:40px 0}
+.stage{width:1280px;height:720px;position:relative;background:var(--white);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.page-num{position:absolute;bottom:28px;right:36px;font-size:12px;letter-spacing:.2em;color:var(--teal);font-weight:600;z-index:9}
+.brand-tag{position:absolute;top:34px;right:44px;font-size:12px;font-weight:700;letter-spacing:.25em;color:var(--teal);z-index:9}
+.brand-tag span{color:var(--orange)}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.3em;color:var(--orange);text-transform:uppercase;margin-bottom:12px}
+h1,h2{color:var(--teal);text-transform:uppercase}
+.rule{width:56px;height:4px;background:var(--orange);border-radius:2px;margin:18px 0}
+p.body{font-size:13px;line-height:1.75;color:#4a5a5e;font-weight:400}
+.icon{width:34px;height:34px;stroke:var(--orange);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.card{background:var(--white);border-radius:10px;box-shadow:0 12px 30px rgba(0,61,70,.14);overflow:hidden}
+.card.teal{background:var(--teal);color:#dfe9ea}
+.card.teal .card-title{color:#fff}
+.card-pad{padding:26px}
+.card-title{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.card-text{font-size:11.5px;line-height:1.65;color:#5c6b6e}
+img{object-fit:cover;display:block}
+/* overlays & strips */
+.orange-strip{position:absolute;background:var(--orange)}
+.scrim{position:absolute;inset:0;background:linear-gradient(160deg,rgba(0,61,70,.82),rgba(0,47,56,.7))}
+/* nav */
+.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:99}
+.nav button{background:var(--teal);color:#fff;border:none;padding:10px 22px;border-radius:6px;font-family:inherit;font-weight:600;cursor:pointer}
+
+/* ========== DRAG AND DROP MODE (injetado) ========== */
+.drag-mode-active .stage{outline:3px dashed var(--orange)}
+.draggable{cursor:grab !important;transform:translate(var(--dx,0px),var(--dy,0px))}
+.draggable:active{cursor:grabbing}
+.draggable.dragging{
+  opacity:.7;z-index:9999;
+  box-shadow:0 20px 80px rgba(0,0,0,.4);
+}
+#dragToggleBtn{
+  position:fixed;top:20px;right:20px;z-index:99;
+  background:var(--teal);color:#fff;border:none;border-radius:100px;
+  padding:10px 20px;font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;box-shadow:0 6px 18px rgba(0,61,70,.35)
+}
+#dragToggleBtn.active{background:var(--orange);color:var(--teal)}
+#resetPositions{
+  position:fixed;top:70px;right:20px;z-index:99;
+  background:#333;color:#fff;border:none;border-radius:100px;
+  padding:10px 20px;font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s
+}
+#resetPositions.visible{opacity:1;pointer-events:auto}
+@media print{body{background:#fff;padding:0;gap:0}.nav,#dragToggleBtn,#resetPositions{display:none}.stage{box-shadow:none;page-break-after:always}}
+@page{size:1280px 720px;margin:0}
+/* —— credits slide —— */
+.src-item{display:flex;gap:14px;align-items:flex-start}
+.src-link{color:var(--orange);text-decoration:none;font-weight:700;font-size:10.5px}
+.src-link:hover{text-decoration:underline}
+.pcell a{display:block;border-radius:8px;overflow:hidden;box-shadow:0 6px 16px rgba(0,61,70,.14)}
+.pcell img{width:100%;height:64px;object-fit:cover;display:block;transition:transform .3s}
+.pcell a:hover img{transform:scale(1.07)}
+.pbadge{display:inline-block;background:var(--orange);color:var(--teal);font-weight:800;font-size:9px;padding:2px 8px;border-radius:20px;letter-spacing:.06em;margin-right:6px;vertical-align:middle}
+.pcap{font-size:10.5px;color:var(--teal);font-weight:700;margin-top:8px}
+.pdesc{font-size:9.5px;color:#5c6b6e;line-height:1.4;margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1 — CAPA + OBJETIVOS DA LIÇÃO ============ -->
+<div class="stage">
+  <div class="orange-strip" style="left:0;top:0;width:26px;height:100%"></div>
+  <div class="orange-strip" style="left:26px;bottom:0;width:280px;height:18px"></div>
+  <img class="draggable" src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=880&h=1280"
+       data-fb="https://picsum.photos/seed/itsupport1/440/640" alt="IT support agent wearing a headset" style="position:absolute;left:80px;top:0;width:440px;height:640px">
+  <div style="position:absolute;left:80px;bottom:110px;width:330px;background:var(--orange);height:60px;opacity:.95"></div>
+  <div class="brand-tag">Unit 2.4 ·<span> Work Skills</span></div>
+  <div style="position:absolute;left:580px;top:120px;width:620px">
+    <span class="eyebrow">Business Partner A2</span>
+    <h1 class="draggable" style="font-size:40px;font-weight:800;line-height:1.1">Making<br>Agreements</h1>
+    <div class="rule"></div>
+    <p class="body" style="max-width:520px">Teaching you how to negotiate an IT support contract.</p>
+    <!-- 4 objetivos 2x2 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px">
+      <div class="card draggable teal card-pad" style="display:flex;gap:14px;align-items:flex-start">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 12h5"/></svg>
+        <div><div class="card-title">Objective 01</div><div class="card-text" style="color:#bcd0d3">Ask clear questions about an IT service.</div></div>
+      </div>
+      <div class="card draggable teal card-pad" style="display:flex;gap:14px;align-items:flex-start">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2" y="14" width="4" height="6" rx="1.5"/><rect x="18" y="14" width="4" height="6" rx="1.5"/></svg>
+        <div><div class="card-title">Objective 02</div><div class="card-text" style="color:#bcd0d3">Answer a client's questions politely.</div></div>
+      </div>
+      <div class="card draggable teal card-pad" style="display:flex;gap:14px;align-items:flex-start">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="8" cy="12" r="5"/><path d="M6 12l1.5 1.5L10 11"/><circle cx="17" cy="12" r="5"/><path d="M15.5 10.5l3 3M18.5 10.5l-3 3"/></svg>
+        <div><div class="card-title">Objective 03</div><div class="card-text" style="color:#bcd0d3">Say yes and say no without losing the deal.</div></div>
+      </div>
+      <div class="card draggable teal card-pad" style="display:flex;gap:14px;align-items:flex-start">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+        <div><div class="card-title">Objective 04</div><div class="card-text" style="color:#bcd0d3">Confirm details and agree a price.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">01 / 10</div>
+</div>
+
+<!-- ============ SLIDE 2 — ROTEIRO DA LIÇÃO ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <img class="draggable" src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=1080"
+       data-fb="https://picsum.photos/seed/roadmap2/600/720" alt="Team working together around a table with laptops" style="position:absolute;left:0;top:0;width:600px;height:720px;filter:saturate(.85)">
+  <div class="orange-strip" style="left:0;bottom:0;width:600px;height:14px"></div>
+  <div style="position:absolute;left:660px;top:110px;width:560px">
+    <span class="eyebrow">Unit 2.4 · Work Skills</span>
+    <h2 class="draggable" style="font-size:34px;font-weight:800">Lesson Roadmap</h2>
+    <div class="rule"></div>
+    <p class="body">We move from words to a real conversation in three steps: build the language, study a model negotiation, then make your own deal with a partner.</p>
+  </div>
+  <div style="position:absolute;left:430px;top:250px;display:flex;gap:24px">
+    <div class="card draggable teal" style="width:270px;padding:32px 26px;border:3px solid #fff">
+      <svg class="icon" style="width:44px;height:44px" viewBox="0 0 24 24"><path d="M2 5h7a3 3 0 0 1 3 3 3 3 0 0 1 3-3h7v13h-7a3 3 0 0 0-3 3 3 3 0 0 0-3-3H2z"/><path d="M12 8v13"/></svg>
+      <div class="card-title" style="margin-top:16px">Stage 01 · Vocabulary</div>
+      <div class="card-text" style="color:#c6d6d8">Key words for IT services, prices, plans and contracts.</div>
+    </div>
+    <div class="card draggable teal" style="width:270px;padding:32px 26px;margin-top:36px;border:3px solid #fff">
+      <svg class="icon" style="width:44px;height:44px" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 12h5"/></svg>
+      <div class="card-title" style="margin-top:16px">Stage 02 · Model Dialogue</div>
+      <div class="card-text" style="color:#c6d6d8">Listen to a real negotiation and notice the useful phrases.</div>
+    </div>
+    <div class="card draggable teal" style="width:270px;padding:32px 26px;margin-top:72px;border:3px solid #fff">
+      <svg class="icon" style="width:44px;height:44px" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/></svg>
+      <div class="card-title" style="margin-top:16px">Stage 03 · Your Role-play</div>
+      <div class="card-text" style="color:#c6d6d8">Negotiate your own deal — then confirm and agree a price.</div>
+    </div>
+  </div>
+  <div class="page-num">02 / 10</div>
+</div>
+
+<!-- ============ SLIDE 3 — FRASES-CHAVE ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <img class="draggable" src="https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600&h=540"
+       data-fb="https://picsum.photos/seed/office3/1280/430" alt="Modern office interior" style="position:absolute;left:0;top:0;width:1280px;height:430px">
+  <div class="scrim" style="height:430px"></div>
+  <div style="position:absolute;left:0;top:120px;width:100%;text-align:center;color:#fff">
+    <span class="eyebrow" style="color:var(--orange)">Key language</span>
+    <h2 class="draggable" style="color:#fff;font-size:36px;font-weight:800">Useful Phrases for the Deal</h2>
+    <p style="font-size:13px;max-width:640px;margin:14px auto 0;color:#d8e2e3;line-height:1.7">Four moves decide every negotiation: ask, answer, accept and refuse. These phrases keep the conversation friendly and professional.</p>
+  </div>
+  <div class="orange-strip" style="left:0;top:395px;width:100%;height:46px"></div>
+  <div style="position:absolute;left:60px;top:360px;display:flex;gap:24px">
+    <div class="card draggable" style="width:278px;padding:28px;text-align:center;border-top:4px solid var(--orange)">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <div class="card-title" style="margin-top:12px">01 · Ask</div>
+      <div class="card-text">"What exactly does the service include?"<br>"How much does it cost per month?"</div>
+    </div>
+    <div class="card draggable" style="width:278px;padding:28px;text-align:center;border-top:4px solid var(--orange);margin-top:24px">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2" y="14" width="4" height="6" rx="1.5"/><rect x="18" y="14" width="4" height="6" rx="1.5"/></svg>
+      <div class="card-title" style="margin-top:12px">02 · Answer</div>
+      <div class="card-text">"That's a great question."<br>"Let me check that for you."</div>
+    </div>
+    <div class="card draggable" style="width:278px;padding:28px;text-align:center;border-top:4px solid var(--orange)">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M8 12l3 3 5-6"/><circle cx="12" cy="12" r="9"/></svg>
+      <div class="card-title" style="margin-top:12px">03 · Say Yes</div>
+      <div class="card-text">"Yes, we can do that."<br>"That works for us."</div>
+    </div>
+    <div class="card draggable" style="width:278px;padding:28px;text-align:center;border-top:4px solid var(--orange);margin-top:24px">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+      <div class="card-title" style="margin-top:12px">04 · Say No</div>
+      <div class="card-text">"I'm afraid that's not possible, but we can offer…"</div>
+    </div>
+  </div>
+  <div class="page-num">03 / 10</div>
+</div>
+
+<!-- ============ SLIDE 4 — PAUSE / PAIR WORK ============ -->
+<div class="stage">
+  <img class="draggable" src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600&h=900"
+       data-fb="https://picsum.photos/seed/pairwork4/1280/720" alt="Business partners shaking hands" style="position:absolute;left:0;top:0;width:1280px;height:720px">
+  <div class="scrim"></div>
+  <div class="draggable" style="position:absolute;left:50%;top:50%;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% + var(--dy,0px)));width:300px;height:300px;border-radius:50%;background:var(--teal);border:5px solid var(--orange);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 25px 60px rgba(0,0,0,.4)">
+    <div style="font-size:12px;letter-spacing:.35em;color:var(--orange);font-weight:600;margin-bottom:10px">YOUR TURN</div>
+    <div style="font-size:34px;font-weight:800;letter-spacing:.1em;color:#fff;text-transform:uppercase;text-align:center;line-height:1.25">Pair<br>Work</div>
+    <div style="font-size:11px;color:#c6d6d8;margin-top:10px;letter-spacing:.05em">Negotiate your IT contract</div>
+  </div>
+  <div style="position:absolute;left:0;top:0;width:100%;height:12px;background:var(--orange)"></div>
+  <div style="position:absolute;left:0;bottom:0;width:100%;height:12px;background:var(--orange)"></div>
+  <div class="page-num" style="color:#fff">04 / 10</div>
+</div>
+
+<!-- ============ SLIDE 5 — DIÁLOGO MODELO: A NEGOCIAÇÃO ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <div style="position:absolute;left:70px;top:60px">
+    <span class="eyebrow">Model dialogue</span>
+    <h2 class="draggable" style="font-size:34px;font-weight:800">The Negotiation</h2>
+    <div class="rule"></div>
+    <p class="body" style="max-width:480px">Nova Office needs IT support for its new office. It4U wants to close the deal. Listen and read: how do they ask, answer, say no — and still agree?</p>
+  </div>
+  <img class="draggable" src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=840&h=600"
+       data-fb="https://picsum.photos/seed/negot5/420/300" alt="Two sides discussing across a table" style="position:absolute;left:70px;top:250px;width:420px;height:300px;border-radius:12px;box-shadow:0 14px 34px rgba(0,61,70,.18)">
+  <img class="draggable" src="https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=760&h=520"
+       data-fb="https://picsum.photos/seed/itprov5/380/260" alt="IT specialist working on code" style="position:absolute;left:300px;top:400px;width:380px;height:260px;border-radius:12px;box-shadow:0 14px 34px rgba(0,61,70,.25)">
+  <div class="orange-strip" style="left:52px;top:230px;width:130px;height:16px"></div>
+  <div style="position:absolute;right:70px;top:110px;width:440px;display:flex;flex-direction:column;gap:20px">
+    <div class="card draggable teal" style="padding:24px;border-left:5px solid var(--orange)">
+      <div class="card-title">Nova Office — Client</div>
+      <div class="card-text" style="color:#c6d6d8">"How much does the basic plan cost? And what exactly does it include?"</div>
+    </div>
+    <div class="card draggable" style="padding:24px;border-left:5px solid var(--teal)">
+      <div class="card-title">It4U — Provider</div>
+      <div class="card-text">"It's €80 a month. That includes helpdesk support and a four-hour response time."</div>
+    </div>
+    <div class="card draggable teal" style="padding:24px;border-left:5px solid var(--orange)">
+      <div class="card-title">Nova Office — Client</div>
+      <div class="card-text" style="color:#c6d6d8">"I'm afraid that's over our budget. Could you offer a discount for a 12-month contract?"</div>
+    </div>
+    <div class="card draggable" style="padding:24px;border-left:5px solid var(--teal)">
+      <div class="card-title">It4U — Provider</div>
+      <div class="card-text">"Let me check… Yes, we can do that. Shall we confirm the details?"</div>
+    </div>
+  </div>
+  <img class="draggable" src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=380"
+       data-fb="https://picsum.photos/seed/laptop5/300/190" alt="Client checking numbers on a laptop" style="position:absolute;left:80px;top:530px;width:300px;height:190px;border-radius:12px;box-shadow:0 14px 34px rgba(0,61,70,.18)">
+  <div class="page-num">05 / 10</div>
+</div>
+
+<!-- ============ SLIDE 6 — O ACORDO FINAL ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <img class="draggable" src="https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=800&h=1200"
+       data-fb="https://picsum.photos/seed/deal6/400/600" alt="Two professionals shaking hands over contract documents" style="position:absolute;left:60px;top:60px;width:400px;height:600px;border-radius:12px;box-shadow:0 16px 40px rgba(0,61,70,.2)">
+  <div class="orange-strip" style="left:38px;top:40px;width:150px;height:16px"></div>
+  <img class="draggable" src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=680&h=380"
+       data-fb="https://picsum.photos/seed/hand6/340/190" alt="Business handshake closing the deal" style="position:absolute;left:520px;top:60px;width:340px;height:190px;border-radius:10px;box-shadow:0 12px 28px rgba(0,61,70,.15)">
+  <img class="draggable" src="https://images.pexels.com/photos/8353817/pexels-photo-8353817.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=680&h=380"
+       data-fb="https://picsum.photos/seed/tech6/340/190" alt="IT technician repairing a laptop" style="position:absolute;left:880px;top:60px;width:340px;height:190px;border-radius:10px;box-shadow:0 12px 28px rgba(0,61,70,.15)">
+  <div style="position:absolute;left:520px;top:290px;width:700px">
+    <span class="eyebrow">Deal in focus</span>
+    <h2 class="draggable" style="font-size:30px;font-weight:800">The Final Agreement</h2>
+    <div class="rule"></div>
+    <p class="body" style="max-width:660px">After three rounds of questions, answers and polite refusals, Nova Office and It4U agree the final terms. The client pays less each month — the provider signs a longer contract. A win-win deal!</p>
+    <div style="display:flex;gap:18px;margin-top:28px">
+      <div class="card draggable teal" style="padding:20px 26px;text-align:center;flex:1">
+        <div style="font-size:30px;font-weight:800;color:var(--orange)">€65</div>
+        <div style="font-size:11px;color:#c6d6d8;margin-top:6px">Monthly price (from €80)</div>
+      </div>
+      <div class="card draggable teal" style="padding:20px 26px;text-align:center;flex:1">
+        <div style="font-size:30px;font-weight:800;color:var(--orange)">12</div>
+        <div style="font-size:11px;color:#c6d6d8;margin-top:6px">Months of contract</div>
+      </div>
+      <div class="card draggable teal" style="padding:20px 26px;text-align:center;flex:1">
+        <div style="font-size:30px;font-weight:800;color:var(--orange)">4h</div>
+        <div style="font-size:11px;color:#c6d6d8;margin-top:6px">Response time, guaranteed</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:26px">
+      <span style="background:var(--gray);border-radius:20px;padding:8px 18px;font-size:11px;font-weight:600;color:var(--teal)">Basic plan</span>
+      <span style="background:var(--gray);border-radius:20px;padding:8px 18px;font-size:11px;font-weight:600;color:var(--teal)">Loyalty discount</span>
+      <span style="background:var(--gray);border-radius:20px;padding:8px 18px;font-size:11px;font-weight:600;color:var(--teal)">Helpdesk support</span>
+    </div>
+  </div>
+  <div class="page-num">06 / 10</div>
+</div>
+
+<!-- ============ SLIDE 7 — FOCO NA LINGUAGEM: DIRETO × EDUCADO ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <div style="position:absolute;left:0;top:70px;width:100%;text-align:center">
+    <span class="eyebrow">Language focus</span>
+    <h2 class="draggable" style="font-size:36px;font-weight:800">Say No — Politely</h2>
+    <div class="rule" style="margin:18px auto 0"></div>
+  </div>
+  <img class="draggable" src="https://images.pexels.com/photos/1181605/pexels-photo-1181605.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=880&h=600"
+       data-fb="https://picsum.photos/seed/talk7/440/300" alt="Two professionals talking about a proposal" style="position:absolute;left:90px;top:225px;width:440px;height:300px;border-radius:14px;box-shadow:0 16px 40px rgba(0,61,70,.2)">
+  <img class="draggable" src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=440"
+       data-fb="https://picsum.photos/seed/docs7/300/220" alt="Reviewing contract documents and figures" style="position:absolute;left:570px;top:255px;width:300px;height:220px;border-radius:14px;box-shadow:0 16px 40px rgba(0,61,70,.22)">
+  <img class="draggable" src="https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=520&h=600"
+       data-fb="https://picsum.photos/seed/coder7/260/300" alt="IT provider working on a solution" style="position:absolute;left:910px;top:225px;width:260px;height:300px;border-radius:14px;box-shadow:0 16px 40px rgba(0,61,70,.2)">
+  <div class="orange-strip" style="left:950px;top:196px;width:120px;height:14px"></div>
+  <div class="card draggable" style="position:absolute;left:140px;top:548px;width:1000px;padding:20px 30px;border-top:4px solid var(--orange)">
+    <div style="font-size:12px;font-weight:600;color:var(--teal);margin-bottom:12px">Softeners keep the conversation friendly — even when the answer is no.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a9a9e;margin-bottom:8px">✗ Too direct</div>
+        <div class="card-text">"No. That's too expensive." &nbsp;·&nbsp; "We can't do that."</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:8px">✓ Polite</div>
+        <div class="card-text">"I'm afraid that's a little over our budget." &nbsp;·&nbsp; "I'm sorry, we can't do that — but we can offer…"</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">07 / 10</div>
+</div>
+
+<!-- ============ SLIDE 8 — ROLE-PLAY: FAÇA O ACORDO ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <div style="position:absolute;left:70px;top:60px">
+    <span class="eyebrow">Speaking practice</span>
+    <h2 class="draggable" style="font-size:34px;font-weight:800">Role-play: Make the Deal</h2>
+    <div class="rule"></div>
+  </div>
+  <div style="position:absolute;left:70px;top:220px;display:flex;gap:40px">
+    <div style="width:550px">
+      <div style="position:relative">
+        <img class="draggable" src="https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1100&h=600"
+             data-fb="https://picsum.photos/seed/prepare8/550/300" alt="Partners preparing before a meeting" style="width:550px;height:300px;border-radius:14px;box-shadow:0 14px 34px rgba(0,61,70,.18)">
+        <div style="position:absolute;right:-18px;bottom:-24px;width:74px;height:74px;border-radius:50%;background:var(--teal);border:3px solid var(--orange);display:flex;align-items:center;justify-content:center">
+          <svg class="icon" style="width:30px;height:30px;stroke:#fff" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 5V3h6v2"/><path d="M9 11h6M9 15h6"/></svg>
+        </div>
+      </div>
+      <h3 class="draggable" style="color:var(--teal);font-size:17px;font-weight:700;text-transform:uppercase;margin:38px 0 10px">Step 1 · Prepare &amp; Open</h3>
+      <p class="body">Student A is the client; Student B is the IT provider. Read your role cards, decide the services you need and set a budget — then open the negotiation with clear questions.</p>
+    </div>
+    <div style="width:550px;margin-top:46px">
+      <div style="position:relative">
+        <img class="draggable" src="https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1100&h=600"
+             data-fb="https://picsum.photos/seed/sign8/550/300" alt="Signing the contract with a pen" style="width:550px;height:300px;border-radius:14px;box-shadow:0 14px 34px rgba(0,61,70,.18)">
+        <div style="position:absolute;right:-18px;bottom:-24px;width:74px;height:74px;border-radius:50%;background:var(--teal);border:3px solid var(--orange);display:flex;align-items:center;justify-content:center">
+          <svg class="icon" style="width:30px;height:30px;stroke:#fff" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </div>
+      </div>
+      <h3 class="draggable" style="color:var(--teal);font-size:17px;font-weight:700;text-transform:uppercase;margin:38px 0 10px">Step 2 · Negotiate &amp; Close</h3>
+      <p class="body">Answer politely, say no without losing the deal, then confirm the details, agree a final price — and sign your agreement!</p>
+    </div>
+  </div>
+  <div class="page-num">08 / 10</div>
+</div>
+
+<!-- ============ SLIDE 9 — WRAP-UP ============ -->
+<div class="stage">
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <img class="draggable" src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=800&h=1040"
+       data-fb="https://picsum.photos/seed/team9/400/520" alt="Happy team celebrating a closed deal" style="position:absolute;left:70px;top:100px;width:400px;height:520px;border-radius:14px;box-shadow:0 16px 40px rgba(0,61,70,.2)">
+  <div class="orange-strip" style="left:48px;top:80px;width:140px;height:16px"></div>
+  <div class="orange-strip" style="left:70px;top:560px;width:400px;height:10px"></div>
+  <div style="position:absolute;left:540px;top:110px;width:650px">
+    <span class="eyebrow">Wrap-up</span>
+    <h2 class="draggable" style="font-size:38px;font-weight:800;line-height:1.15">What You Can<br>Do Now</h2>
+    <div class="rule"></div>
+    <p class="body" style="max-width:600px">In business, a good agreement is a deal both sides can accept. In this lesson you moved through the full cycle of a negotiation — asking, answering, refusing politely and closing — and you can now do it in English.</p>
+    <div class="card draggable teal" style="display:flex;align-items:center;gap:28px;padding:30px 34px;margin-top:40px;max-width:560px;border-left:6px solid var(--orange)">
+      <div style="width:84px;height:84px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:var(--teal)">4/4</div>
+      <div>
+        <div class="card-title" style="margin-bottom:6px">Objectives achieved</div>
+        <div class="card-text" style="color:#c6d6d8">You can ask about a service, answer a client politely, say yes and no without losing the deal — and confirm the price.</div>
+      </div>
+    </div>
+    <div style="margin-top:30px;display:flex;gap:36px;align-items:flex-end">
+      <div><div style="font-size:24px;font-weight:800;color:var(--teal)">12+</div><div style="font-size:11px;color:#5c6b6e">Useful phrases</div></div>
+      <div><div style="font-size:24px;font-weight:800;color:var(--teal)">3</div><div style="font-size:11px;color:#5c6b6e">Negotiation rounds</div></div>
+      <div><div style="font-size:24px;font-weight:800;color:var(--teal)">1</div><div style="font-size:11px;color:#5c6b6e">Agreement signed</div></div>
+      <div style="font-size:10px;color:#8a9a9e;margin-left:auto">Photos: Pexels — see credits →</div>
+    </div>
+  </div>
+  <div class="page-num">09 / 10</div>
+</div>
+
+<!-- ============ SLIDE 10 — FONTES & CRÉDITOS ============ -->
+<div class="stage">
+  <!-- Painel esquerdo teal -->
+  <div style="position:absolute;left:0;top:0;width:430px;height:720px;background:var(--teal);box-shadow:10px 0 30px rgba(0,61,70,.15)">
+    <div class="orange-strip" style="left:0;top:0;width:430px;height:12px"></div>
+    <div class="orange-strip" style="left:0;bottom:0;width:430px;height:18px"></div>
+    <div style="position:absolute;left:50px;top:64px;width:330px">
+      <span class="eyebrow">References</span>
+      <h2 style="color:#fff;font-size:34px;font-weight:800;line-height:1.15">Sources &amp;<br>Credits</h2>
+      <div class="rule"></div>
+      <p style="font-size:12px;line-height:1.7;color:#c6d6d8">Every resource used to build this presentation — lesson content, photography, typography and icons — properly credited below.</p>
+    </div>
+    <!-- lista de fontes -->
+    <div style="position:absolute;left:50px;top:298px;width:330px;display:flex;flex-direction:column;gap:18px">
+      <div class="src-item">
+        <svg class="icon" style="width:24px;height:24px;flex-shrink:0" viewBox="0 0 24 24"><path d="M2 5h7a3 3 0 0 1 3 3 3 3 0 0 1 3-3h7v13h-7a3 3 0 0 0-3 3 3 3 0 0 0-3-3H2z"/><path d="M12 8v13"/></svg>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#fff">Lesson content</div>
+          <div style="font-size:10px;line-height:1.55;color:#9fb7ba;margin-top:3px">Pearson — <em>Business Partner A2</em> · Unit 2.4 Work Skills: Making Agreements<br>
+          <a class="src-link" href="https://www.pearson.com/languages/practice-english/business-partner.html" target="_blank" rel="noopener">pearson.com → Business Partner ↗</a></div>
+        </div>
+      </div>
+      <div class="src-item">
+        <svg class="icon" style="width:24px;height:24px;flex-shrink:0" viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M12 4v16"/><path d="M9 20h6"/></svg>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#fff">Typography</div>
+          <div style="font-size:10px;line-height:1.55;color:#9fb7ba;margin-top:3px">Montserrat — via Google Fonts (SIL Open Font License)<br>
+          <a class="src-link" href="https://fonts.google.com/specimen/Montserrat" target="_blank" rel="noopener">fonts.google.com → Montserrat ↗</a></div>
+        </div>
+      </div>
+      <div class="src-item">
+        <svg class="icon" style="width:24px;height:24px;flex-shrink:0" viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/></svg>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#fff">Icons</div>
+          <div style="font-size:10px;line-height:1.55;color:#9fb7ba;margin-top:3px">Inline SVG stroke icons — Feather style (MIT)<br>
+          <a class="src-link" href="https://feathericons.com" target="_blank" rel="noopener">feathericons.com ↗</a></div>
+        </div>
+      </div>
+      <div class="src-item">
+        <svg class="icon" style="width:24px;height:24px;flex-shrink:0" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:#fff">Fallback placeholders</div>
+          <div style="font-size:10px;line-height:1.55;color:#9fb7ba;margin-top:3px">Lorem Picsum — backup images if a photo is offline<br>
+          <a class="src-link" href="https://picsum.photos" target="_blank" rel="noopener">picsum.photos ↗</a></div>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;left:50px;bottom:38px;width:330px;font-size:9.5px;line-height:1.6;color:#8fa8ac">
+      Photos: <a class="src-link" style="font-size:9.5px" href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels License</a> — free for personal &amp; commercial use; attribution appreciated, not required.
+    </div>
+  </div>
+
+  <!-- Grade de créditos das fotos -->
+  <div style="position:absolute;left:470px;top:60px;width:760px">
+    <span class="eyebrow">Photography credits</span>
+    <h3 style="font-size:21px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.02em">16 Photos · <span style="color:var(--orange)">Pexels</span></h3>
+    <p style="font-size:10px;color:#5c6b6e;margin-top:6px">Pexels License — free for personal &amp; commercial use, attribution appreciated. Photographers are credited on each photo page (click the images).</p>
+  </div>
+
+  <div style="position:absolute;left:470px;top:168px;width:760px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px 16px">
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/1181396/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred1/173/64" alt="Business meeting in a conference room">
+      </a>
+      <div class="pcap"><span class="pbadge">S1</span>Group of People on Conference Room</div>
+      <div class="pdesc">Christina Morillo — reunião de negócios em sala de conferências</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/3184291/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred2/173/64" alt="Colleagues shaking hands in a meeting">
+      </a>
+      <div class="pcap"><span class="pbadge">S2</span>Colleagues Shaking Each Other's Hands</div>
+      <div class="pdesc">fauxels — colegas se cumprimentando em reunião</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/380769/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred3/173/64" alt="Open-plan office interior">
+      </a>
+      <div class="pcap"><span class="pbadge">S3</span>Man Sitting in Front of Computer</div>
+      <div class="pdesc">Marc Mueller — escritório open-plane iluminado</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/3184465/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred4/173/64" alt="Professionals shaking hands">
+      </a>
+      <div class="pcap"><span class="pbadge">S4</span>Man and Woman Near Table</div>
+      <div class="pdesc">fauxels — profissionais apertando as mãos (título não confirmado)</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/3184292/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred5/173/64" alt="Colleagues discussing data charts">
+      </a>
+      <div class="pcap"><span class="pbadge">S5</span>People Discuss About Graphs and Rates</div>
+      <div class="pdesc">fauxels — colegas discutindo gráficos e dados</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/1181263/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred6/173/64" alt="Two women reviewing code on a laptop">
+      </a>
+      <div class="pcap"><span class="pbadge">S5</span>Two Women Looking at the Code at Laptop</div>
+      <div class="pdesc">Christina Morillo — duas desenvolvedoras revisando código</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/1181675/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred7/173/64" alt="Developer writing code in front of monitors">
+      </a>
+      <div class="pcap"><span class="pbadge">S5</span>Woman Writing Code in Front of Monitors</div>
+      <div class="pdesc">Christina Morillo — desenvolvedora programando (título não confirmado)</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/5668858/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred8/173/64" alt="Woman filling a form with documents and laptop">
+      </a>
+      <div class="pcap"><span class="pbadge">S6</span>Woman Filling Job Application Form in Office</div>
+      <div class="pdesc">Sora Shimazaki — preenchendo formulário com chefe</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/5668473/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred9/173/64" alt="Wooden gavel on a desk">
+      </a>
+      <div class="pcap"><span class="pbadge">S6</span>Close-up Photo of Wooden Gavel</div>
+      <div class="pdesc">Sora Shimazaki — martelo de juiz sobre a mesa ⚠️ não combina com o tema</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/8353817/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/8353817/pexels-photo-8353817.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred10/173/64" alt="Three businessmen discussing documents">
+      </a>
+      <div class="pcap"><span class="pbadge">S6</span>Three Businessmen Discussing Documents</div>
+      <div class="pdesc">Kampus Production — executivos discutindo documentos com gráficos</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/1181605/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/1181605/pexels-photo-1181605.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred11/173/64" alt="Client conversation">
+      </a>
+      <div class="pcap"><span class="pbadge">S7</span>1181605 — Christina Morillo</div>
+      <div class="pdesc">Título não confirmado (página indisponível na verificação)</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/590016/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred12/173/64" alt="Laptop, charts and resume on a desk">
+      </a>
+      <div class="pcap"><span class="pbadge">S7</span>Laptop, Charts and Resume on Wooden Desk</div>
+      <div class="pdesc">Lukas Blazek — mesa com notebook, gráficos e currículo</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/1181354/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred13/173/64" alt="Female engineer in a server room">
+      </a>
+      <div class="pcap"><span class="pbadge">S7</span>Female Engineer Monitoring Data Servers</div>
+      <div class="pdesc">Christina Morillo — engenheira em sala de servidores (título não confirmado)</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/1170412/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred14/173/64" alt="Open-plan office interior">
+      </a>
+      <div class="pcap"><span class="pbadge">S8</span>Modern Open-Plan Office</div>
+      <div class="pdesc">CadoMaestro — escritório moderno e iluminado ⚠️ sem pessoas</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/5669602/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred15/173/64" alt="Signing the contract">
+      </a>
+      <div class="pcap"><span class="pbadge">S8</span>5669602 — Sora Shimazaki</div>
+      <div class="pdesc">Título não confirmado (página indisponível na verificação)</div>
+    </div>
+    <div class="pcell">
+      <a href="https://www.pexels.com/photo/3184360/" target="_blank" rel="noopener">
+        <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=346&h=128" data-fb="https://picsum.photos/seed/cred16/173/64" alt="Diverse team in a collaborative meeting">
+      </a>
+      <div class="pcap"><span class="pbadge">S9</span>Diverse Group in Office Meeting</div>
+      <div class="pdesc">fauxels — equipe colaborando em reunião (título não confirmado)</div>
+    </div>
+  </div>
+
+  <div class="brand-tag">Making<span> Agreements</span></div>
+  <div class="page-num">10 / 10</div>
+</div>
+
+<!-- NAVEGAÇÃO -->
+<div class="nav">
+  <button onclick="window.print()">⬇ Exportar PDF</button>
+</div>
+<button id="dragToggleBtn" onclick="toggleDragMode()">Modo Arraste: <span id="dragStatus">OFF</span></button>
+<button id="resetPositions" onclick="resetAllPositions()">Restaurar Posições</button>
+
+<script>
+// Fallback: se uma foto do Pexels não carregar, usa um placeholder
+document.querySelectorAll('img[data-fb]').forEach(img=>{
+  img.addEventListener('error',()=>{ img.src=img.dataset.fb; },{once:true});
+});
+const slides=[...document.querySelectorAll('.stage')];let i=0;
+function show(n){slides.forEach((s,k)=>s.style.display=k===n?'block':'none');}
+show(0);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'){i=Math.min(i+1,slides.length-1);show(i);}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){i=Math.max(i-1,0);show(i);}
+});
+// exibe todos ao imprimir
+window.onbeforeprint=()=>slides.forEach(s=>s.style.display='block');
+
+// ===== DRAG AND DROP (injetado) =====
+let dragMode=false,activeDraggable=null,startX=0,startY=0,startDx=0,startDy=0;
+
+function setDragMode(on){
+  dragMode=on;
+  document.body.classList.toggle('drag-mode-active',dragMode);
+  document.getElementById('dragToggleBtn').classList.toggle('active',dragMode);
+  document.getElementById('dragStatus').textContent=dragMode?'ON':'OFF';
+  document.getElementById('resetPositions').classList.toggle('visible',dragMode);
+  document.querySelectorAll('.draggable').forEach(el=>{el.style.userSelect=dragMode?'none':'';});
+}
+function toggleDragMode(){setDragMode(!dragMode);}
+
+function currentOffset(el){
+  const cs=getComputedStyle(el);
+  return{dx:parseFloat(cs.getPropertyValue('--dx'))||0,dy:parseFloat(cs.getPropertyValue('--dy'))||0};
+}
+
+// mouse
+document.addEventListener('mousedown',e=>{
+  if(!dragMode)return;
+  const el=e.target.closest('.draggable');
+  if(!el)return;
+  activeDraggable=el;el.classList.add('dragging');
+  startX=e.clientX;startY=e.clientY;
+  const o=currentOffset(el);startDx=o.dx;startDy=o.dy;
+  e.preventDefault();
+});
+document.addEventListener('mousemove',e=>{
+  if(!activeDraggable||!dragMode)return;
+  activeDraggable.style.setProperty('--dx',(startDx+e.clientX-startX)+'px');
+  activeDraggable.style.setProperty('--dy',(startDy+e.clientY-startY)+'px');
+});
+document.addEventListener('mouseup',()=>{
+  if(activeDraggable){activeDraggable.classList.remove('dragging');activeDraggable=null;}
+});
+
+// touch
+document.addEventListener('touchstart',e=>{
+  if(!dragMode||!e.target.closest('.draggable'))return;
+  const el=e.target.closest('.draggable');
+  activeDraggable=el;el.classList.add('dragging');
+  const t=e.touches[0];startX=t.clientX;startY=t.clientY;
+  const o=currentOffset(el);startDx=o.dx;startDy=o.dy;
+  e.preventDefault();
+},{passive:false});
+document.addEventListener('touchmove',e=>{
+  if(!activeDraggable||!dragMode)return;
+  const t=e.touches[0];
+  activeDraggable.style.setProperty('--dx',(startDx+t.clientX-startX)+'px');
+  activeDraggable.style.setProperty('--dy',(startDy+t.clientY-startY)+'px');
+  e.preventDefault();
+},{passive:false});
+document.addEventListener('touchend',()=>{
+  if(activeDraggable){activeDraggable.classList.remove('dragging');activeDraggable=null;}
+});
+
+// restaurar posições = limpar os deslocamentos
+function resetAllPositions(){
+  if(!confirm('Tem certeza que deseja restaurar todas as posições originais?'))return;
+  document.querySelectorAll('.draggable').forEach(el=>{
+    el.style.removeProperty('--dx');el.style.removeProperty('--dy');
+  });
+}
+
+// atalhos: D liga/desliga o modo arraste, R restaura
+document.addEventListener('keydown',e=>{
+  if(e.key==='d'||e.key==='D')toggleDragMode();
+  if((e.key==='r'||e.key==='R')&&dragMode)resetAllPositions();
+});
+
+setDragMode(false);
+
+</script>
+<!-- DRAG-MODE-INJECTED-v1 -->
+</body>
+</html>
